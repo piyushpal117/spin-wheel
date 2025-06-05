@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+// src/spinwheel/global.scss
+
+$bg-color: #1e1e1e;
+$button-bg: #ffcc00;
+$button-hover: #ffdd33;
+$button-color: #000;
+$button-radius: 4px;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $bg-color;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+#pixi-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+#spinbuttonn {
+  background-color: $button-bg;
+  color: $button-color;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: $button-radius;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#spinbuttonn:hover {
+  background-color: $button-hover;
+}
+
+#spinbutton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

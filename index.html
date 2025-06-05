@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pixi</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column; /* Arrange elements in a column */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Dancing Script', cursive;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/Golden Wheel of Fortune.png');
+            background-size: cover;
+            background-position: center;
+            filter: blur(15px); 
+            z-index: -1;
+        }
+
+        h1 {
+            font-size: 75px;    
+            color: rgb(255, 200, 208);
+            text-shadow: 5px 5px 8px rgba(255, 0, 0, 0.7); 
+            margin: 0;
+            margin-bottom: 40px;
+        }
+
+        p {
+            font-size: 34px;
+            color: rgb(238, 162, 22);
+            margin: 0;
+            margin-bottom: 10px; 
+        }
+
+        button {
+            padding: 20px 90px;
+            font-size: 24px;
+            cursor: pointer;
+            border: none;
+            border-radius: 12px;
+            background-color: #ff2205;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #ff3939;
+        }
+    </style>
+</head>
+<!--<body>
+    <h1>Spin Wheel 🎰</h1>
+    <p>Click to Start</p>
+    <button id="playButton">Play</button>
+
+    <script>
+        const playButton = document.getElementById('playButton');
+        playButton.addEventListener('click', () => {
+            // Remove the button from the page
+            // playButton.remove();
+
+            // Dynamically load the main.js script
+            const script = document.createElement('script');
+            script.type = 'module';
+            script.src = '/src/main.js';
+            document.body.appendChild(script);
+        });
+    </script>
+</body>-->
+<body>
+  <!-- This DIV is where Pixi will inject its canvas -->
+  <div id="pixi-container"></div>
+
+  <!-- You can add more controls (e.g. a dropdown for number of segments) here -->
+  <h1>Spin Wheel 🎰</h1>
+  <p>Click to Start</p>
+  <div id="controls">
+    <button id="spinbutton">PLAY</button>
+  </div>
+  <!-- 
+    We use a module‐type script so we can write `import` statements in main.js.
+    Make sure that your bundler (if any) is configured to serve / resolve `pixi.js` from node_modules.
+  -->
+  <script>
+        const spinbutton = document.getElementById('spinbutton');
+        spinbutton.addEventListener('click', () => {
+            // Remove the button from the page
+            spinbutton.remove();
+
+            // Dynamically load the main.js script
+            const script = document.createElement('script');
+            script.type = 'module';
+            script.src = '/src/main.ts';
+            document.body.appendChild(script);
+        });
+    </script>
+</body>
+</html>
