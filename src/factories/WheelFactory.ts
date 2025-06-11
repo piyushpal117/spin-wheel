@@ -1,8 +1,7 @@
-import { WheelSection } from "../spinwheel/WheelSection";
+import { WheelSection } from "../spinwheel/SpinWheel";
 // import { fetchWheelConfig } from "../Hooks/services";
 import { WHEEL_CONFIG } from "../constant/constant";
 
-// ...existing code...
 export class WheelFactory {
   static createSections(colors: string[], segments: number): WheelSection[] {
     const wheelData = WHEEL_CONFIG.wheelConfiguration;
@@ -30,4 +29,3 @@ export class WheelFactory {
     });
   }
 }
-// ...existing code...

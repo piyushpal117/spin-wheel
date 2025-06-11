@@ -2,7 +2,6 @@
 import { Container, Graphics, Sprite, Text, TextStyle, Texture } from "pixi.js";
 import { Howl } from "howler";
 
-let music = false;
 export class UIFactory {
   static createPointer(
     texture: Texture,
@@ -35,15 +34,15 @@ static createCongratulation(
       volume: 0.5,
     });  
 
+    static sound = new Howl({
+      src: ["/audio/spin-wheel-sound.mp3"],
+      volume: 0.5,
+    });
   static createSpinButton(onClick: () => void): Container {
     const spinButton = new Container();
     spinButton.interactive = true;
     spinButton.cursor = "pointer";
 
-    const sound = new Howl({
-      src: ["/audio/spin-wheel-sound.mp3"],
-      volume: 0.5,
-    });
 
     
 
@@ -67,7 +66,7 @@ static createCongratulation(
     spinButton.on("pointerdown", () => {
       spinButton.interactive = false;
       // btnText.tint = 0x777777;
-      sound.play();
+      UIFactory.sound.play();
       btnBg.tint = 0x777777;
       onClick();
     });

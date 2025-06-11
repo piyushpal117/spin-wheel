@@ -1,4 +1,3 @@
-// src/core/AppManager.ts
 import { Application, Container, TilingSprite, Assets, Texture } from "pixi.js";
 
 export class AppManager {

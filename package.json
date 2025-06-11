@@ -12,12 +12,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@tweenjs/tween.js": "^25.0.0",
     "howler": "^2.2.4",
     "pixi.js": "^8.10.1"
   },
   "devDependencies": {
     "@pixi/devtools": "^2.0.1",
     "@types/howler": "^2.2.12",
+    "@types/tween.js": "^18.5.1",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.1.7",
