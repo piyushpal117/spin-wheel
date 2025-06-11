@@ -1,4 +1,5 @@
-import { Application, Container, TilingSprite, Assets, Texture } from "pixi.js";
+import { Application, Container, TilingSprite, Assets, Texture, Ticker } from "pixi.js";
+import * as TWEEN from "@tweenjs/tween.js";
 
 export class AppManager {
   public app: Application;
@@ -27,9 +28,13 @@ export class AppManager {
     this.stage = new Container();
     this.app.stage = this.stage;
     this.stage.addChild(this.bg);
+    
+    this.app.ticker.add((ticker) => {
+      TWEEN.update(performance.now());
+    });
   }
 
-  public resize(onResize: () => void) {
+  public resize(onResize: () => void): void {
     window.addEventListener("resize", () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
