@@ -6,7 +6,7 @@ import config from "../config.json";
 
 console.log("Starting Spin Wheel App...");
 
-(async () => {
+async function initGame() {
   const manager = new AppManager();
   await manager.init();
   console.log('managerinit initialised');
@@ -124,4 +124,6 @@ console.log("Starting Spin Wheel App...");
   manager.resize(() => {
     container.position.set(window.innerWidth / 2, window.innerHeight / 2);
   });
-})();
+}
+
+export { initGame };

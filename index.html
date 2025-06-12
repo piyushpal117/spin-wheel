@@ -94,14 +94,6 @@
     We use a module‐type script so we can write `import` statements in main.js.
     Make sure that your bundler (if any) is configured to serve / resolve `pixi.js` from node_modules.
   -->
-    <script>
-      const spinbutton = document.getElementById("spinbutton");
-      spinbutton?.addEventListener("click", async () => {
-        const { initGame } = await import("./main");
-        console.log("Button clicked, initializing game...");
-        
-        initGame();
-      });
-    </script>
+  
   </body>
 </html>
