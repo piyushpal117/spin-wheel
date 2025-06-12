@@ -1,17 +1,24 @@
 import { Application, Container, TilingSprite, Assets, Texture, Ticker } from "pixi.js";
 import * as TWEEN from "@tweenjs/tween.js";
 
+declare global {
+  // Add __PIXI_APP__ to the globalThis type
+  var __PIXI_APP__: Application | undefined;
+}
+
 export class AppManager {
   public app: Application;
-  public stage: Container;
-  public bg: TilingSprite;
+  public stage!: Container;
+  public bg!: TilingSprite;
 
   constructor() {
     this.app = new Application();
   }
 
   public async init(): Promise<void> {
-    await this.app.init({ resizeTo: window });
+    await this.app.init({ resizeTo: window ,antialias: true, backgroundColor: 0x000c19 });
+    console.log("PIXI Application initialized");
+    
     globalThis.__PIXI_APP__ = this.app;
     document.body.appendChild(this.app.canvas);
     this.app.canvas.style.position = "absolute";
