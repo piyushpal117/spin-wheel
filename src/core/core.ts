@@ -1,5 +1,7 @@
-import { Application, Container, TilingSprite, Assets, Texture, Ticker } from "pixi.js";
+import { Application, Container, TilingSprite, Assets, Texture   } from "pixi.js";
 import * as TWEEN from "@tweenjs/tween.js";
+import spotlight from "../assets/images/spotlight.png"; 
+
 
 declare global {
   // Add __PIXI_APP__ to the globalThis type
@@ -24,11 +26,11 @@ export class AppManager {
     this.app.canvas.style.position = "absolute";
     this.app.renderer.background.color = 0x000c19;
 
-    const baseTex = (await Assets.load("/images/spotlight.png")) as Texture;
+    const baseTex = (await Assets.load(spotlight)) as Texture;
     this.bg = new TilingSprite({
       texture: baseTex,
       width: this.app.screen.width,
-      height: this.app.screen.height,
+      height: this.app.screen.height
     });
     this.bg.tileScale.set(2.6, 1.8);
 

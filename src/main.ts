@@ -27,6 +27,7 @@ async function initGame() {
   const container = new Container();
   container.zIndex = 1;
   container.position.set(center.x, center.y);4
+ 
   
   container.addChild(wheel);
   container.addChild(Pointer);
@@ -84,9 +85,11 @@ async function initGame() {
     });
   });
 
+  const popup = new Container();
+  popup.zIndex = 10;
+  popup.width = app.screen.width;
+  popup.height = app.screen.height;
   function showPopup(prize: string) {
-    const popup = new Container();
-    popup.zIndex = 10;
 
     const overlay = new Graphics()
     .rect(0, 0, app.screen.width, app.screen.height)
@@ -120,9 +123,25 @@ async function initGame() {
 
     stage.addChild(popup);
   }
-
+const containerWidth = container.width;
   manager.resize(() => {
     container.position.set(window.innerWidth / 2, window.innerHeight / 2);
+    popup.width = app.screen.width;
+    popup.height = app.screen.height;
+    
+    if (container.width<app.screen.width)
+      {
+        container.width = containerWidth;
+        container.height = container.width;
+        console.log('increase size',container.width, app.screen.width);
+        
+      }else 
+      // ( container.width>app.screen.width)
+      {
+     container.width = app.screen.width;
+     container.height =container.width;
+   } 
+      
   });
 }
 
