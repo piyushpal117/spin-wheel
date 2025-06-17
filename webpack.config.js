@@ -1,58 +1,56 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+import { resolve as _resolve, dirname } from "path";
+import { fileURLToPath } from "url";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 
+// __dirname fix for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-
-module.exports = {
-  entry: './src/index.ts', // your entry file
+export default {
+  entry: "./src/index.ts",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'), // output folder
-    clean: true, // clean dist folder on every build
+    filename: "bundle.js",
+    path: _resolve(__dirname, "dist"),
+    clean: true,
   },
   resolve: {
-    extensions: ['.ts', '.js'], // resolve TypeScript and JS
+    extensions: [".ts", ".js"],
   },
   module: {
     rules: [
       {
         test: /\.ts$/,
-        use: 'ts-loader',
+        use: "ts-loader",
         exclude: /node_modules/,
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/, 
-        type: 'asset/resource',
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        type: "asset/resource",
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/, 
-        type:'dist/images/resource'
-      }
+        test: /\.(mp3|wav|ogg)$/,
+        type: "asset/resource",
+      },
     ],
   },
   devServer: {
-    static: './dist', // serve files from dist
+    static: "./dist",
     hot: true,
     port: 3000,
     open: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: "./index.html",
     }),
     new CopyWebpackPlugin({
-        patterns: [
-          {
-            from: 'public',
-            //context: path.join(__dirname, 'your-app'),
-          }
-        ]
-      }),
+      patterns: [{ from: "public" }],
+    }),
   ],
-  mode: 'development', // change to 'production' for production build
+  mode: "development",
 };

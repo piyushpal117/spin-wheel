@@ -1,48 +1,64 @@
-import { Assets, Texture, Container, Graphics, Text, TextStyle, Sprite } from "pixi.js";
+import {
+  Assets,
+  Texture,
+  Container,
+  Graphics,
+  Text,
+  TextStyle,
+  Sprite,
+} from "pixi.js";
 import { AppManager } from "./core/core";
 import { SpinWheel, WheelSection } from "./components/SpinWheel";
 import config from "../config.json";
-
+import pointerImg from "./assets/images/pointer.png";
+import { Howl } from "howler";
+import winAudio from "./assets/audio/you-win.mp3";
+import spinAudio from "./assets/audio/spin-wheel-sound.mp3";
 
 console.log("Starting Spin Wheel App...");
 
 async function initGame() {
   const manager = new AppManager();
   await manager.init();
-  console.log('managerinit initialised');
-  
+  console.log("managerinit initialised");
+  const spinSound = new Howl({
+    src: [spinAudio],
+    volume: 0.5,
+  });
+  const winSound = new Howl({
+    src: [winAudio],
+    volume: 0.5,
+  });
 
   const { app, stage } = manager;
   const center = { x: app.renderer.width / 2, y: app.renderer.height / 2 };
 
-  const border = await Assets.load("/images/pointer.png") as Texture;
+  const border = (await Assets.load(pointerImg)) as Texture;
   const Pointer = new Sprite(border);
   Pointer.anchor.set(0.5);
   Pointer.scale.set(0.45);
 
   const sections: WheelSection[] = config.segments;
-  const wheel = new SpinWheel(250, sections, new TextStyle({ fontSize: 26, fill: 0xffffff }));
+  const wheel = new SpinWheel(
+    250,
+    sections,
+    new TextStyle({ fontSize: 26, fill: 0xffffff })
+  );
   wheel.position.set(0, 0);
 
   const container = new Container();
   container.zIndex = 1;
-  container.position.set(center.x, center.y);4
- 
-  
+  container.position.set(center.x, center.y);
+  4;
+
   container.addChild(wheel);
   container.addChild(Pointer);
 
   // Optional: pointer image
-  const pointerTex = await Assets.load("/images/pointer.png") as Texture;
-  const pointer = new Graphics()
-    .poly([
-      -10, 0,
-       10, 0,
-       0, -50
-    ])
-    .fill(0x58151D);
+  const pointerTex = (await Assets.load("/images/pointer.png")) as Texture;
+  const pointer = new Graphics().poly([-10, 0, 10, 0, 0, -50]).fill(0x58151d);
   pointer.position.set(0, -260);
-  pointer.angle=180;
+  pointer.angle = 180;
   // container.addChild(pointer);
 
   const button = new Container();
@@ -50,11 +66,11 @@ async function initGame() {
   button.cursor = "pointer";
 
   const bg = new Graphics()
-  .circle(0, 0, 35)
-  .fill(0xdb0f27)
-  .stroke({color:0x290a53, width: 4})
-  
-  .setStrokeStyle({ color: 0x290a53, width: 6 });
+    .circle(0, 0, 35)
+    .fill(0xdb0f27)
+    .stroke({ color: 0x290a53, width: 4 })
+
+    .setStrokeStyle({ color: 0x290a53, width: 6 });
 
   const label = new Text({
     text: "SPIN",
@@ -62,8 +78,8 @@ async function initGame() {
       fontFamily: "Arial",
       fontSize: 19,
       fill: "#ffffff",
-      fontWeight: "bold"
-    })
+      fontWeight: "bold",
+    }),
   });
   label.anchor.set(0.5);
 
@@ -73,6 +89,7 @@ async function initGame() {
   stage.addChild(container);
 
   button.on("pointerdown", () => {
+    spinSound.play();
     button.interactive = false;
     bg.tint = 0x777777;
 
@@ -80,7 +97,9 @@ async function initGame() {
     wheel.spin(index, () => {
       const result = sections[index];
       showPopup(result.label);
+      spinSound.stop(); 
       button.interactive = true;
+      winSound.play();
       bg.tint = 0xffffff;
     });
   });
@@ -90,15 +109,20 @@ async function initGame() {
   popup.width = app.screen.width;
   popup.height = app.screen.height;
   function showPopup(prize: string) {
-
     const overlay = new Graphics()
-    .rect(0, 0, app.screen.width, app.screen.height)
-    .fill({ color: 0x000000, alpha: 0.6 })
+      .rect(0, 0, app.screen.width, app.screen.height)
+      .fill({ color: 0x000000, alpha: 0.6 });
 
     const box = new Graphics()
-    .roundRect((app.screen.width - 500) / 2, (app.screen.height - 300) / 2, 500, 300, 20)
-    .fill(0xfffb00)
-    .setStrokeStyle({ color: 0xff0500, width: 6 })
+      .roundRect(
+        (app.screen.width - 500) / 2,
+        (app.screen.height - 300) / 2,
+        500,
+        300,
+        20
+      )
+      .fill(0xfffb00)
+      .setStrokeStyle({ color: 0xff0500, width: 6 });
 
     const text = new Text({
       text: `🎉 Congratulations!\nYou won: ${prize} coins`,
@@ -109,8 +133,8 @@ async function initGame() {
         align: "center",
         fontWeight: "bold",
         wordWrap: true,
-        wordWrapWidth: 460
-      })
+        wordWrapWidth: 460,
+      }),
     });
     text.anchor.set(0.5);
     text.position.set(center.x, center.y);
@@ -123,25 +147,24 @@ async function initGame() {
 
     stage.addChild(popup);
   }
-const containerWidth = container.width;
+  const containerWidth = container.width;
   manager.resize(() => {
     container.position.set(window.innerWidth / 2, window.innerHeight / 2);
     popup.width = app.screen.width;
     popup.height = app.screen.height;
     
-    if (container.width<app.screen.width)
-      {
-        container.width = containerWidth;
-        container.height = container.width;
-        console.log('increase size',container.width, app.screen.width);
-        
-      }else 
-      // ( container.width>app.screen.width)
-      {
-     container.width = app.screen.width;
-     container.height =container.width;
-   } 
-      
+    if (container.width > app.screen.width){
+      container.width = app.screen.width;
+      container.height = container.width;
+
+    }
+      const currentScale=container.width;
+      if (container.width < app.screen.width &&currentScale<containerWidth) {
+      container.width =currentScale+5;
+      container.height = container.width;
+      // console.log("increase size", container.width, app.screen.width);
+    }
+    // ( container.width>app.screen.width)
   });
 }
 

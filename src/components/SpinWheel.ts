@@ -92,16 +92,16 @@ export class SpinWheel extends Container {
       
       if (progress < 0.8) {
         // Main spin phase (0-80% of time) - smooth acceleration and deceleration
-        const mainProgress = progress / 0.8;
+        const mainProgress = progress / 0.9;
         animationProgress = this.easeInOutCubic(mainProgress);
         currentRotation = startRotation + (totalRotation * animationProgress);
       } else {
         // Wobble phase (80-100% of time) - bounce at the end
-        const wobbleProgress = (progress - 0.8) / 0.2;
+        const wobbleProgress = (progress - 0.9) / 0.1;
         const bounceProgress = this.easeOutBounce(wobbleProgress);
         
         // Add small wobble motion on top of the final position
-        const wobbleAmount = 0.05 * (1 - wobbleProgress);
+        const wobbleAmount = 0.04 * (1 - wobbleProgress);
         const wobble = Math.sin(elapsed * 0.02) * wobbleAmount;
         
         currentRotation = startRotation + totalRotation + wobble;

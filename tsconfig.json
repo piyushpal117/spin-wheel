@@ -9,6 +9,7 @@
     "outDir": "./dist",
     "resolveJsonModule": true
   },
-  "include": ["./**/*"],
-  "exclude": ["dist"]
+  "include": ["./**/*","src","src/types"],
+  "exclude": ["dist"],
+  
 }
